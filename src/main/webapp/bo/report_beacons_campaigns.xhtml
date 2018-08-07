@@ -1,0 +1,113 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:body>
+	<ui:include src="../WEB-INF/include/header.xhtml" />
+	<div class="wrapper">
+		<div id="slider">
+			<div id="slide-wrapper" class="rounded clear">
+				<figure id="slide-1">
+					<p:breadCrumb>
+					    <p:menuitem value="Categories" url="dashboard.xhtml" />
+					    <p:menuitem value="Reporting" styleClass="push15" url="#" />
+					</p:breadCrumb>
+				</figure>
+			</div>
+		</div>
+	</div>
+	<div class="wrapper">
+		<p:tabMenu id="menu" activeIndex="1">
+			<ui:include src="../WEB-INF/include/reportMenu.xhtml" />
+		</p:tabMenu>
+	</div>
+	<div class="wrapper row2">
+		<div id="container" class="clear">
+			<h:form id="main" prependId="false"
+				onkeypress="if (event.keyCode == 13) {return false; }">
+
+				<p:dataTable id="beaconsTable" var="beacon"
+					value="#{reportBeaconsCampaignsBean.beacons}"
+					filteredValue="#{reportBeaconsCampaignsBean.filteredBeacons}">
+
+					<f:facet name="header">
+						<h:commandLink id="excel">
+							<p:graphicImage value="../images/excel.png" />
+							<p:dataExporter type="xls" target="beaconsTable"
+								fileName="beacons_campaigns_history" />
+						</h:commandLink>
+						<h:commandLink id="csv">
+							<p:graphicImage value="../images/csv.png" />
+							<p:dataExporter type="csv" target="beaconsTable"
+								fileName="beacons_campaigns_history" />
+						</h:commandLink>
+					</f:facet>
+
+					<p:column headerText="Id"
+						filterBy="#{beacon.beacon.id}" filterStyle="center-column;width: 40px;" filterMatchMode="contains"
+						style="width:50px;" styleClass="center-column">
+						<h:outputText value="#{beacon.beacon.id}" />
+					</p:column>
+					<p:column headerText="#{msgs.beaconId}" style="width:250px;"  filterStyle="center-column;width: 240px;"
+						filterBy="#{beacon.beacon.beaconId}" filterMatchMode="contains">
+						<h:outputText value="#{beacon.beacon.beaconId}" />
+					</p:column>
+					<p:column headerText="#{msgs.zipCode}" style="width:60px;" filterStyle="center-column;width: 50px;" 
+						filterBy="#{event.beacon.zipCode}" filterMatchMode="contains" styleClass="center-column">
+						<h:outputText value="#{beacon.beacon.zipCode}" />
+					</p:column>
+					<p:column headerText="#{msgs.campaignId}"
+						filterBy="#{beacon.campaign.id}" filterMatchMode="contains"
+						style="width:120px;" styleClass="center-column">
+						<h:outputText value="#{beacon.campaign.id}" />
+					</p:column>
+					<p:column headerText="#{msgs.campaignName}"
+						filterBy="#{beacon.campaign.name}" filterMatchMode="contains"
+						style="width:100px;" styleClass="center-column">
+						<h:outputText value="#{beacon.campaign.name}" />
+					</p:column>
+					<p:column headerText="#{msgs.campaignStatus}" style="width:60px;"
+						styleClass="center-column">
+						<h:outputText value="#{beacon.campaign.status}"
+							converter="campaignStatusConverter" />
+					</p:column>
+					<p:column headerText="#{msgs.campaignStartDate}"
+						filterBy="#{beacon.campaign.startDate}"
+						filterMatchMode="contains" style="width:100px;"
+						styleClass="center-column">
+						<h:outputText value="#{beacon.campaign.startDate}">
+							<f:convertDateTime dateStyle="medium" locale="de" type="date" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="#{msgs.campaignEndDate}"
+						filterBy="#{beacon.campaign.endDate}" filterMatchMode="contains"
+						style="width:100px;" styleClass="center-column">
+						<h:outputText value="#{beacon.campaign.endDate}">
+							<f:convertDateTime dateStyle="medium" locale="de" type="date" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="#{msgs.reportMessageSentNumber}"
+						style="width:100px;" styleClass="center-column">
+						<h:outputText value="#{beacon.messagesSent}" />
+					</p:column>
+					<p:column headerText="#{msgs.reportMessageReceivedNumber}"
+						style="width:100px;" styleClass="center-column">
+						<h:outputText value="#{beacon.messagesResponse}" />
+					</p:column>
+				</p:dataTable>
+				
+				<p:commandButton value="#{msgs.customerCampaignGoBack}" id="back"
+					action="dashboard.xhtml" ajax="false" />
+			</h:form>
+			<hr class="btmspace-80" />
+			<section> </section>
+			<div class="clear"></div>
+		</div>
+	</div>
+	<ui:include src="../WEB-INF/include/footer.xhtml" />
+</h:body>
+</html>

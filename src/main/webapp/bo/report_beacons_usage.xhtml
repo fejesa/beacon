@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:body>
+	<ui:include src="../WEB-INF/include/header.xhtml" />
+	<div class="wrapper">
+		<div id="slider">
+			<div id="slide-wrapper" class="rounded clear">
+				<figure id="slide-1"> <p:breadCrumb>
+					<p:menuitem value="Categories" url="dashboard.xhtml" />
+					<p:menuitem value="Reporting" styleClass="push15" url="#" />
+				</p:breadCrumb> </figure>
+			</div>
+		</div>
+	</div>
+	<div class="wrapper">
+		<p:tabMenu id="menu" activeIndex="2">
+			<ui:include src="../WEB-INF/include/reportMenu.xhtml" />
+		</p:tabMenu>
+	</div>
+	<div class="wrapper row2">
+		<div id="container" class="clear">
+			<h:form id="main" prependId="false"
+				onkeypress="if (event.keyCode == 13) {return false; }">
+
+				<p:dataTable id="eventsTable" var="event"
+					value="#{reportCampaignsCustomersBean.events}"
+					filteredValue="#{reportCampaignsCustomersBean.filteredEvents}">
+
+					<f:facet name="header">
+						<h:commandLink id="excel">
+							<p:graphicImage value="../images/excel.png" />
+							<p:dataExporter type="xls" target="eventsTable"
+								fileName="beacons_usage_history" />
+						</h:commandLink>
+						<h:commandLink id="csv">
+							<p:graphicImage value="../images/csv.png" />
+							<p:dataExporter type="csv" target="eventsTable"
+								fileName="beacons_usage_history" />
+						</h:commandLink>
+					</f:facet>
+
+					<p:column headerText="#{msgs.eventId}"
+						styleClass="center-column">
+						<h:outputText value="#{event.id}" />
+					</p:column>
+					<p:column headerText="Id" filterBy="#{event.beacon.id}"
+						filterMatchMode="contains"
+						styleClass="center-column">
+						<h:outputText value="#{event.beacon.id}" />
+					</p:column>
+					<p:column headerText="#{msgs.beaconId}"
+						filterBy="#{event.beacon.beaconId}"
+						filterMatchMode="contains">
+						<h:outputText value="#{event.beacon.beaconId}" />
+					</p:column>
+					<p:column headerText="#{msgs.zipCode}"
+						filterBy="#{event.beacon.zipCode}" filterMatchMode="contains"
+						styleClass="center-column">
+						<h:outputText value="#{event.beacon.zipCode}" />
+					</p:column>
+					<p:column headerText="#{msgs.messageSent}"
+						filterBy="#{event.msgSent}" filterMatchMode="contains"
+						styleClass="center-column" style="width:200px;">
+						<h:outputText value="#{event.msgSent}">
+							<f:convertDateTime dateStyle="medium" locale="de" type="both" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="#{msgs.responseReceived}"
+						filterBy="#{event.msgReceived}" filterMatchMode="contains"
+						styleClass="center-column" style="width:200px;">
+						<h:outputText value="#{event.msgReceived}">
+							<f:convertDateTime dateStyle="medium" locale="de" type="both" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="#{msgs.customerId}"
+						filterBy="#{event.customer.id}" filterMatchMode="contains"
+						styleClass="center-column">
+						<h:outputText value="#{event.customer.customerId}" />
+					</p:column>
+					<p:column headerText="#{msgs.campaignId}"
+						filterBy="#{event.campaign.id}" filterMatchMode="contains"
+						styleClass="center-column" style="width:150px;">
+						<h:outputText value="#{event.campaign.id}" />
+					</p:column>
+					<p:column headerText="#{msgs.campaignName}"
+						filterBy="#{event.campaign.name}" filterMatchMode="contains"
+						styleClass="center-column" style="width:150px;">
+						<h:outputText value="#{event.campaign.name}" />
+					</p:column>
+				</p:dataTable>
+
+				<p:commandButton value="#{msgs.customerCampaignGoBack}" id="back"
+					action="dashboard.xhtml" ajax="false" />
+			</h:form>
+			<hr class="btmspace-80" />
+			<section> </section>
+			<div class="clear"></div>
+		</div>
+	</div>
+	<ui:include src="../WEB-INF/include/footer.xhtml" />
+</h:body>
+</html>

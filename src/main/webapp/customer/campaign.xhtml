@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pm="http://primefaces.org/mobile"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions">
+
+<f:view renderKitId="PRIMEFACES_MOBILE" />
+
+<h:head>
+
+</h:head>
+
+<h:body>
+	<f:metadata>
+		<o:viewParam id="CustomerId" name="CustomerId"
+			value="#{customerCampaignBean.customerId}" />
+		<o:viewParam id="BeaconUUID" name="BeaconUUID"
+			value="#{customerCampaignBean.uuid}" />
+		<o:viewParam id="MajorId" name="MajorId"
+			value="#{customerCampaignBean.majorId}" />
+		<o:viewParam id="MinorId" name="MinorId"
+			value="#{customerCampaignBean.minorId}" />
+		<o:viewParam id="CampaignId" name="CampaignId"
+			value="#{customerCampaignBean.campaignId}" />
+		<o:viewParam id="Token" name="Token"
+			value="#{customerCampaignBean.token}" />
+	</f:metadata>
+	<pm:page id="first">
+		<pm:header title="#{msgs.customerCampaignStars}"></pm:header>
+		<pm:content>
+			<h:form>
+				<p:panel
+					header="#{msgs.customerCampaignWelcome} #{customerCampaignBean.customer.name}"
+					style="height:300px;">
+					<div style="padding: 0px 40px 10px 0px;">
+						<h:outputText value="#{customerCampaignBean.campaign.name}"
+							style="font-size: 18px;" />
+					</div>
+					<c:set var="textMsg"
+						value="#{customerCampaignBean.campaign.msgText}" />
+					<h:outputText
+						value="#{of:replaceAll(textMsg, '\\n', '&lt;br /&gt;')}"
+						escape="false" />
+				</p:panel>
+				<p:panelGrid columns="3">
+					<p:button type="button" icon="ui-icon-shop"
+						href="http://www.primefaces.org" />
+					<p:button type="button" icon="ui-icon-mail" outcome="pm:second"
+						rendered="#{customerCampaignBean.campaign.msgType == 'Email'}" />
+					<p:button type="button" icon="ui-icon-star" disabled="true" />
+				</p:panelGrid>
+			</h:form>
+		</pm:content>
+	</pm:page>
+
+	<pm:page id="second">
+		<pm:header title="#{msgs.customerCampaignSendMail}"></pm:header>
+		<pm:content>
+			<h:form>
+				<p:growl id="growl" showDetail="true" />
+				<pm:field>
+					<p:inputTextarea id="textarea" value="#{customerCampaignBean.message}"
+						required="true" />
+				</pm:field>
+				<p:panelGrid columns="2">
+					<p:button outcome="pm:first" value="#{msgs.customerCampaignGoBack}" />
+					<p:commandButton value="#{msgs.customerCampaignSend}"
+						action="#{customerCampaignBean.send()}" update="growl">
+						<f:param name="Token" value="#{customerCampaignBean.token}" />
+						<f:param name="CustomerId" value="#{customerCampaignBean.customerId}" />
+						<f:param name="BeaconUUID" value="#{customerCampaignBean.uuid}" />
+						<f:param name="MajorId" value="#{customerCampaignBean.majorId}" />
+						<f:param name="MinorId" value="#{customerCampaignBean.minorId}" />
+						<f:param name="CampaignId" value="#{customerCampaignBean.campaignId}" />
+					</p:commandButton>
+				</p:panelGrid>
+			</h:form>
+		</pm:content>
+	</pm:page>
+</h:body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:body>
+	<ui:include src="../WEB-INF/include/header.xhtml" />
+	<div class="wrapper">
+		<div id="slider">
+			<div id="slide-wrapper" class="rounded clear">
+				<figure id="slide-1"> <p:breadCrumb>
+					<p:menuitem value="Categories" url="dashboard.xhtml" />
+					<p:menuitem value="Campaign Management" styleClass="push15"
+						url="campaigns.xhtml" />
+					<p:menuitem value="Campaign" styleClass="push15" url="#" />
+				</p:breadCrumb> </figure>
+			</div>
+		</div>
+	</div>
+	<div class="wrapper">
+		<p:tabMenu id="menu" activeIndex="1">
+			<ui:include src="../WEB-INF/include/campaignMainMenu.xhtml" />
+		</p:tabMenu>
+	</div>
+	<div class="wrapper row2">
+		<div id="container" class="clear">
+			<h:form id="campaign_form" prependId="false">
+				<div class="wrapper">
+					<p:tabMenu id="campaignMenu" activeIndex="0">
+						<ui:include src="../WEB-INF/include/campaignMenu.xhtml" />
+					</p:tabMenu>
+				</div>
+				<p:growl id="growl" life="5000" autoUpdate="true" />
+				<p:panel>
+					<p:panelGrid id="grid1" styleClass="panel-grid">
+						<p:row>
+							<p:column style="width:5%;text-align:left;font-weight:bold;">
+								<h:outputText value="#{msgs.campaignName}:" />
+							</p:column>
+							<p:column style="width:35%;text-align:left;">
+								<p:inputText id="name" value="#{campaignBean.name}" size="36"
+									required="true" />
+								<p:message for="name" />
+							</p:column>
+							<p:column style="width:5%;text-align:left;font-weight:bold;">
+								<h:outputText value="#{msgs.campaignStatus}:" />
+							</p:column>
+							<p:column style="width:50%;text-align:left;">
+								<h:outputText value="#{campaignBean.status}"
+									converter="campaignStatusConverter" style="font-weight:bold;" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column style="width:5%;text-align:left;font-weight:bold;">
+								<h:outputText value="#{msgs.campaignStartDate}:" />
+							</p:column>
+							<p:column style="width:35%;text-align:left;">
+								<p:calendar id="campaignStartDate" locale="de" required="true"
+									showButtonPanel="true" value="#{campaignBean.startDate}"
+									navigator="true" pattern="dd.MM.yyyy" size="12">
+								</p:calendar>
+								<p:message for="campaignStartDate" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column style="width:5%;text-align:left;font-weight:bold;">
+								<h:outputText value="#{msgs.campaignEndDate}:" />
+							</p:column>
+							<p:column style="width:35%;text-align:left;">
+								<p:calendar id="campaignEndDate" locale="de" required="true"
+									showButtonPanel="true" value="#{campaignBean.endDate}"
+									navigator="true" pattern="dd.MM.yyyy" size="12">
+								</p:calendar>
+								<p:message for="campaignEndDate" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column style="width:15%;text-align:left;font-weight:bold;">
+								<h:outputText value="#{msgs.campaignFrequency}:" />
+							</p:column>
+							<p:column style="width:55%;text-align:left;">
+								<p:selectOneMenu id="frequency"
+									value="#{campaignBean.msgFrequency}" required="true"
+									style="font-size:15px;width:220px;">
+									<f:selectItem itemLabel="#{msgs.pleaseSelect}" itemValue="" />
+									<f:selectItems value="#{campaignBean.messageFrequencies}" />
+								</p:selectOneMenu>
+								<p:message for="frequency" />
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+				</p:panel>
+				<p:commandButton id="saveButton" value="#{msgs.save}"
+					actionListener="#{campaignBean.update}" style="width:120px;"
+					ajax="false" />
+				<p:spacer width="50" />
+				<p:commandButton id="cancelButton" value="#{msgs.cancel}"
+					immediate="true" actionListener="#{campaignBean.cancel}"
+					style="width:120px;" ajax="false" />
+			</h:form>
+			<hr class="btmspace-80" />
+			<section> </section>
+			<div class="clear"></div>
+		</div>
+	</div>
+	<ui:include src="../WEB-INF/include/footer.xhtml" />
+</h:body>
+</html>

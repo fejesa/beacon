@@ -1,0 +1,133 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:body>
+	<ui:include src="../WEB-INF/include/header.xhtml" />
+	<div class="wrapper">
+		<div id="slider">
+			<div id="slide-wrapper" class="rounded clear">
+				<figure id="slide-1"> <p:breadCrumb>
+					<p:menuitem value="Categories" url="dashboard.xhtml" />
+					<p:menuitem value="Beacon Management" styleClass="push15" url="#" />
+				</p:breadCrumb> </figure>
+			</div>
+		</div>
+	</div>
+	<div class="wrapper row2">
+		<div id="container" class="clear">
+			<h:form id="main" prependId="false"
+				onkeypress="if (event.keyCode == 13) {return false; }">
+
+				<p:growl id="growl" life="5000" autoUpdate="true" />
+
+				<p:dataTable id="beaconTable" var="beacon"
+					value="#{beaconBean.beacons}">
+					<p:column headerText="#{msgs.bcmTitle}" sortBy="#{beacon.title}"
+						style="width:100px;" filterBy="#{beacon.title}"
+						filterMatchMode="contains">
+						<h:outputText value="#{beacon.title}" />
+					</p:column>
+					<p:column headerText="#{msgs.bcmUuid}" filterBy="#{beacon.uuid}"
+						filterMatchMode="contains" sortBy="#{beacon.uuid}"
+						style="width:100px;" styleClass="center-column">
+						<h:outputText value="#{beacon.uuid}" />
+					</p:column>
+					<p:column headerText="#{msgs.bcmMajorId}"
+						filterBy="#{beacon.majorId}" filterMatchMode="contains"
+						sortBy="#{beacon.majorId}" style="width:100px;"
+						styleClass="center-column">
+						<h:outputText value="#{beacon.majorId}" />
+					</p:column>
+					<p:column headerText="#{msgs.bcmMinorId}"
+						filterBy="#{beacon.minorId}" filterMatchMode="contains"
+						sortBy="#{beacon.minorId}" style="width:100px;"
+						styleClass="center-column">
+						<h:outputText value="#{beacon.minorId}" />
+					</p:column>
+					<p:column headerText="#{msgs.bcmType}"
+						filterBy="#{beacon.locationType}" filterMatchMode="contains"
+						sortBy="#{beacon.locationType}" style="width:100px;"
+						styleClass="center-column">
+						<h:outputText value="#{beacon.locationType}" />
+					</p:column>
+					<p:column headerText="#{msgs.bcmActivation}"
+						sortBy="#{beacon.activationDate}" style="width:120px;"
+						styleClass="center-column">
+						<h:outputText value="#{beacon.activationDate}">
+							<f:convertDateTime dateStyle="long" locale="de" type="date" />
+						</h:outputText>
+					</p:column>
+					<p:column style="text-align:center;width:150px;">
+						<f:facet name="header">
+							<h:outputText value="#{msgs.actions}"
+								title="#{msgs.actionsTooltip}" />
+						</f:facet>
+						<p:commandLink action="beacon.xhmtl?faces-redirect=true"
+							ajax="false">
+							<p:graphicImage id="edit" title="#{msgs.edit}"
+								value="/images/edit.png" />
+							<f:setPropertyActionListener
+								target="#{beaconBean.selectedBeaconId}" value="#{beacon.id}" />
+						</p:commandLink>
+						<p:spacer width="10" />
+						<p:commandLink disabled="#{beacon.status != 'Active'}"
+							action="#{beaconBean.deactivate}" ajax="false"
+							update="growl beaconTable">
+							<p:graphicImage id="deactivate" title="#{msgs.deactivate}"
+								value="/images/deactivate.png" />
+							<f:setPropertyActionListener
+								target="#{beaconBean.selectedBeaconId}" value="#{beacon.id}" />
+
+						</p:commandLink>
+						<p:spacer width="10" />
+						<p:commandLink disabled="#{beacon.status != 'Inactive'}"
+							action="#{beaconBean.activate}" ajax="false"
+							update="growl beaconTable">
+							<p:graphicImage id="activate" title="#{msgs.activate}"
+								value="/images/activate.png" />
+							<f:setPropertyActionListener
+								target="#{beaconBean.selectedBeaconId}" value="#{beacon.id}" />
+						</p:commandLink>
+						<p:spacer width="10" />
+						<p:commandLink onclick="PF('removeBeaconDialog').show();">
+							<p:graphicImage id="remove" title="#{msgs.remove}"
+								value="/images/remove.png" />
+							<f:setPropertyActionListener
+								target="#{beaconBean.selectedBeaconId}" value="#{beacon.id}" />
+						</p:commandLink>
+					</p:column>
+				</p:dataTable>
+				<p:commandButton value="#{msgs.addBeacon}" id="add"
+					action="beacon.xhmtl?faces-redirect=true"
+					actionListener="#{beaconBean.clearForm}" ajax="false" />
+
+				<p:commandButton value="#{msgs.customerCampaignGoBack}" id="back"
+					action="dashboard.xhtml" ajax="false" />
+
+				<p:confirmDialog id="removeDialog" widgetVar="removeBeaconDialog"
+					header="#{msgs.removeBeaconHeader}" closable="false"
+					severity="alert">
+					<f:facet name="message">
+						<h:outputText value="#{msgs.removeConfirmationMessage}" />
+					</f:facet>
+					<p:commandButton id="okButton" value="#{msgs.ok}"
+						actionListener="#{beaconBean.remove}" ajax="false"
+						oncomplete="PF('removeBeaconDialog').hide();"
+						update="growl beaconTable" icon="ui-icon-check" />
+					<p:commandButton id="cancelButton" value="#{msgs.cancel}"
+						onclick="removeBeaconDialog.hide();" icon="ui-icon-close" />
+				</p:confirmDialog>
+			</h:form>
+			<hr class="btmspace-80" />
+			<section> </section>
+			<div class="clear"></div>
+		</div>
+	</div>
+	<ui:include src="../WEB-INF/include/footer.xhtml" />
+</h:body>
+</html>

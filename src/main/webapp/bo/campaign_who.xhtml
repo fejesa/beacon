@@ -1,0 +1,167 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<h:body>
+	<ui:include src="../WEB-INF/include/header.xhtml" />
+	<div class="wrapper">
+		<div id="slider">
+			<div id="slide-wrapper" class="rounded clear">
+				<figure id="slide-1"> <p:breadCrumb>
+					<p:menuitem value="Categories" url="dashboard.xhtml" />
+					<p:menuitem value="Campaign Management" styleClass="push15"
+						url="campaigns.xhtml" />
+					<p:menuitem value="Campaign" styleClass="push15"
+						url="campaign_when.xhtml" />
+				</p:breadCrumb> </figure>
+
+			</div>
+		</div>
+	</div>
+	<div class="wrapper">
+		<p:tabMenu id="menu" activeIndex="1">
+			<ui:include src="../WEB-INF/include/campaignMainMenu.xhtml" />
+		</p:tabMenu>
+	</div>
+	<div class="wrapper row2">
+		<div id="container" class="clear">
+			<h:form id="campaign_form" prependId="false">
+				<div class="wrapper">
+					<p:tabMenu id="campaignMenu" activeIndex="1">
+						<ui:include src="../WEB-INF/include/campaignMenu.xhtml" />
+					</p:tabMenu>
+				</div>
+				<p:growl id="growl" life="5000" autoUpdate="true" />
+
+				<p:panel>
+					<p:panelGrid id="grid1" styleClass="panel-grid">
+						<p:row>
+							<p:column style="width:30%;text-align:left;font-weight:bold;">
+								<h:outputText value="#{msgs.customerAgeFrom}:" />
+							</p:column>
+							<p:column>
+								<pe:inputNumber id="ageFrom"
+									value="#{campaignBean.customerAgeFrom}" decimalPlaces="0"
+									required="true" style="width:30px;text-align:right;">
+									<p:ajax event="blur" update="ageFrom" />
+								</pe:inputNumber>
+								<p:message for="ageFrom" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column style="width:30%;text-align:left;font-weight:bold;">
+								<h:outputText value="#{msgs.customerAgeTo}:" />
+							</p:column>
+							<p:column>
+								<pe:inputNumber id="ageTo" value="#{campaignBean.customerAgeTo}"
+									decimalPlaces="0" required="true"
+									style="width:30px;text-align:right;">
+									<p:ajax event="blur" update="ageTo" />
+								</pe:inputNumber>
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column style="width:30%;text-align:left;font-weight:bold;">
+								<h:outputText value="#{msgs.customerBalanceFrom}:" />
+							</p:column>
+							<p:column>
+								<pe:inputNumber id="balanceFrom"
+									value="#{campaignBean.accountBalanceFrom}" decimalPlaces="2"
+									decimalSeparator="," symbolPosition="s" required="true"
+									style="width:30px;text-align:right;">
+									<p:ajax event="blur" update="balanceFrom" />
+								</pe:inputNumber>
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column style="width:30%;text-align:left;font-weight:bold;">
+								<h:outputText value="#{msgs.customerBalanceTo}:" />
+							</p:column>
+							<p:column>
+								<pe:inputNumber id="balanceTo"
+									value="#{campaignBean.accountBalanceTo}" decimalPlaces="2"
+									decimalSeparator="," symbolPosition="s" required="true"
+									style="width:30px;text-align:right;">
+									<p:ajax event="blur" update="balanceTo" />
+								</pe:inputNumber>
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column style="width:30%;text-align:left;font-weight:bold;">
+								<h:outputText value="#{msgs.customerBonusFrom}:" />
+							</p:column>
+							<p:column>
+								<pe:inputNumber id="bonusFrom" value="#{campaignBean.bonusFrom}"
+									decimalPlaces="0" required="true"
+									style="width:30px;text-align:right;">
+									<p:ajax event="blur" update="bonusFrom" />
+								</pe:inputNumber>
+								<p:message for="bonusFrom" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column style="width:30%;text-align:left;font-weight:bold;">
+								<h:outputText value="#{msgs.customerBonusTo}:" />
+							</p:column>
+							<p:column>
+								<pe:inputNumber id="bonusTo" value="#{campaignBean.bonusTo}"
+									decimalPlaces="0" required="true"
+									style="width:30px;text-align:right;">
+									<p:ajax event="blur" update="bonusTo" />
+								</pe:inputNumber>
+								<p:message for="bonusTo" />
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+				</p:panel>
+				<p:spacer height="10" />
+				<p:panel>
+					<p:panelGrid>
+						<p:outputLabel value="#{msgs.customerJobs}:"
+							style="width:20%;text-align:left;font-weight:bold;" />
+						<p:pickList id="jobList" value="#{campaignBean.jobs}" var="jobs"
+							itemLabel="#{jobs}" itemValue="#{jobs}" />
+					</p:panelGrid>
+					<p:panelGrid>
+						<p:outputLabel value="#{msgs.customerZipCodes}:"
+							style="width:20%;text-align:left;font-weight:bold;" />
+						<p:pickList id="zipCodesList"
+							value="#{campaignBean.customerZipCodes}" var="zips"
+							itemLabel="#{zips}" itemValue="#{zips}" />
+					</p:panelGrid>
+					<p:panelGrid>
+						<p:outputLabel value="#{msgs.customerBranches}:"
+							style="width:20%;text-align:left;font-weight:bold;" />
+						<p:pickList id="branchList" value="#{campaignBean.branches}"
+							var="branches" itemLabel="#{branches}" itemValue="#{branches}" />
+					</p:panelGrid>
+					<p:panelGrid>
+						<p:outputLabel value="#{msgs.customerRelationshipManagers}:"
+							style="width:20%;text-align:left;font-weight:bold;" />
+						<p:pickList id="relationshipManagerList"
+							value="#{campaignBean.relationshipManagers}"
+							var="relationshipManagers" itemLabel="#{relationshipManagers}"
+							itemValue="#{relationshipManagers}" />
+					</p:panelGrid>
+				</p:panel>
+				<p:commandButton id="saveButton" value="#{msgs.save}"
+					actionListener="#{campaignBean.update}" style="width:120px;"
+					ajax="false" />
+				<p:spacer width="50" />
+				<p:commandButton id="cancelButton" value="#{msgs.cancel}"
+					immediate="true" actionListener="#{campaignBean.cancel}"
+					style="width:120px;" ajax="false" />
+			</h:form>
+			<hr class="btmspace-80" />
+			<section> </section>
+			<div class="clear"></div>
+		</div>
+	</div>
+	<ui:include src="../WEB-INF/include/footer.xhtml" />
+</h:body>
+</html>

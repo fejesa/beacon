@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions">
+
+<!-- title -->
+<h:head>
+	<link rel="stylesheet" href="../layout/styles/layout.css" type="text/css" />
+	<f:facet name="first">
+		<meta content="text/html; charset=iso-8859-1"
+			http-equiv="Content-Type" />
+		<title>#{msgs.title}</title>
+	</f:facet>
+</h:head>
+
+<h:body>
+	<!-- content -->
+	<div class="wrapper row2">
+		<ui:insert name="errorTitle">#{page.current.title}</ui:insert>
+		<ui:insert name="errorContent" />
+	</div>
+	<!-- footer -->
+	<ui:include src="/WEB-INF/include/footer.xhtml" />
+</h:body>
+</html>

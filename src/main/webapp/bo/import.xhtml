@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:body>
+	<ui:include src="../WEB-INF/include/header.xhtml" />
+	<div class="wrapper">
+		<div id="slider">
+			<div id="slide-wrapper" class="rounded clear">
+				<figure id="slide-1">
+					<p:breadCrumb>
+					    <p:menuitem value="Categories" url="dashboard.xhtml" />
+					    <p:menuitem value="Customer And Accountant Management" styleClass="push15" url="#" />
+					</p:breadCrumb>
+				</figure>
+			</div>
+		</div>
+	</div>
+	<div class="wrapper row2">
+		<div id="container" class="clear">
+			<h:form id="main" prependId="false" enctype="multipart/form-data">
+				<p:fileUpload fileUploadListener="#{importBean.doImport}"
+					label="#{msgs.selectFileButton}" cancelLabel="#{msgs.cancel}"
+					mode="advanced" dragDropSupport="false" update="messages"
+					fileLimit="1" allowTypes="/(\.|\/)(csv)$/" style="width: 500px;" />
+				<p:growl id="messages" showDetail="true" />
+				<p:commandButton value="#{msgs.customerCampaignGoBack}" id="back"
+					action="dashboard.xhtml" ajax="false" />
+			</h:form>
+			<hr class="btmspace-80" />
+			<section> </section>
+			<div class="clear"></div>
+		</div>
+	</div>
+	<ui:include src="../WEB-INF/include/footer.xhtml" />
+</h:body>
+</html>

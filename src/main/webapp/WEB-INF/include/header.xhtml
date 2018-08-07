@@ -1,0 +1,29 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+	<ui:include src="title.xhtml" />
+
+	<div class="wrapper row0">
+		<div id="topbar" class="clear">
+			<h:form>
+				<p:commandLink id="logoutAction" ajax="true"
+					action="#{logoutBean.logout()}" value="#{msgs.logout}"
+					style="color:blue;font-size:18px;font-family: Georgia;text-decoration:underline;" />
+			</h:form>
+		</div>
+	</div>
+	<div class="wrapper row1">
+		<header id="header" class="clear">
+			<div id="logo" class="fl_left">
+				<h1>
+					<a href="dashboard.xhtml">Beacon Campaign Management</a>
+				</h1>
+			</div>
+		</header>
+	</div>
+
+</ui:composition>

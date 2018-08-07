@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:body>
+	<ui:include src="../WEB-INF/include/header.xhtml" />
+	<div class="wrapper">
+		<div id="slider">
+			<div id="slide-wrapper" class="rounded clear">
+				<figure id="slide-1"> <p:breadCrumb>
+					<p:menuitem value="Categories" url="dashboard.xhtml" />
+					<p:menuitem value="Reporting" styleClass="push15" url="#" />
+				</p:breadCrumb> </figure>
+			</div>
+		</div>
+	</div>
+	<div class="wrapper">
+		<p:tabMenu id="menu" activeIndex="0">
+			<ui:include src="../WEB-INF/include/reportMenu.xhtml" />
+		</p:tabMenu>
+	</div>
+	<div class="wrapper row2">
+		<div id="container" class="clear">
+			<h:form id="main" prependId="false"
+				onkeypress="if (event.keyCode == 13) {return false; }">
+
+				<p:dataTable id="beaconTable" var="beacon"
+					value="#{reportBeaconsBean.beacons}"
+					filteredValue="#{reportBeaconsBean.filteredBeacons}">
+
+					<f:facet name="header">
+						<h:commandLink id="excel">
+							<p:graphicImage value="../images/excel.png" />
+							<p:dataExporter type="xls" target="beaconTable"
+								fileName="beacons" />
+						</h:commandLink>
+						<h:commandLink id="csv">
+							<p:graphicImage value="../images/csv.png" />
+							<p:dataExporter type="csv" target="beaconTable"
+								fileName="beacons" />
+						</h:commandLink>
+					</f:facet>
+
+					<p:column headerText="#{msgs.beaconId}"
+						filterBy="#{beacon.beaconId}" filterMatchMode="contains"
+						style="width:100px;" styleClass="center-column">
+						<h:outputText value="#{beacon.beaconId}" />
+					</p:column>
+					<p:column headerText="#{msgs.bcmTitle}" style="width:100px;"
+						filterBy="#{beacon.title}" filterMatchMode="contains">
+						<h:outputText value="#{beacon.title}" />
+					</p:column>
+					<p:column headerText="#{msgs.house}" filterBy="#{beacon.house}"
+						filterMatchMode="contains" style="width:100px;"
+						styleClass="center-column">
+						<h:outputText value="#{beacon.house}" />
+					</p:column>
+					<p:column headerText="#{msgs.street}" filterBy="#{beacon.street}"
+						filterMatchMode="contains" style="width:100px;"
+						styleClass="center-column">
+						<h:outputText value="#{beacon.street}" />
+					</p:column>
+					<p:column headerText="#{msgs.city}" filterBy="#{beacon.city}"
+						filterMatchMode="contains" style="width:100px;"
+						styleClass="center-column">
+						<h:outputText value="#{beacon.city}" />
+					</p:column>
+					<p:column headerText="#{msgs.zipCode}" filterBy="#{beacon.zipCode}"
+						filterMatchMode="contains" style="width:100px;"
+						styleClass="center-column">
+						<h:outputText value="#{beacon.zipCode}" />
+					</p:column>
+					<p:column headerText="#{msgs.country}" filterBy="#{beacon.country}"
+						filterMatchMode="contains" style="width:100px;"
+						styleClass="center-column">
+						<h:outputText value="#{beacon.country}" />
+					</p:column>
+					<p:column headerText="#{msgs.gpsLat}"
+						filterBy="#{beacon.gpsLatitude}" filterMatchMode="contains"
+						style="width:100px;" styleClass="center-column">
+						<h:outputText value="#{beacon.gpsLatitude}" />
+					</p:column>
+					<p:column headerText="#{msgs.gpsLong}"
+						filterBy="#{beacon.gpsLongitude}" filterMatchMode="contains"
+						style="width:100px;" styleClass="center-column">
+						<h:outputText value="#{beacon.gpsLongitude}" />
+					</p:column>
+					<p:column headerText="#{msgs.bcmType}"
+						filterBy="#{beacon.locationType}" filterMatchMode="contains"
+						style="width:100px;" styleClass="center-column">
+						<h:outputText value="#{beacon.locationType}" />
+					</p:column>
+				</p:dataTable>
+
+				<p:commandButton value="#{msgs.customerCampaignGoBack}" id="back"
+					action="dashboard.xhtml" ajax="false" />
+			</h:form>
+			<hr class="btmspace-80" />
+			<section> </section>
+			<div class="clear"></div>
+		</div>
+	</div>
+	<ui:include src="../WEB-INF/include/footer.xhtml" />
+</h:body>
+</html>

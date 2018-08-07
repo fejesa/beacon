@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:body>
+	<h:head>
+		<link href="layout/styles/layout.css" rel="stylesheet" type="text/css"
+			media="all" />
+		<f:facet name="first">
+			<meta charset="utf-8" />
+			<meta name="viewport"
+				content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+			<title>Beacon Campaign Management</title>
+		</f:facet>
+	</h:head>
+	<div class="wrapper"
+		style="background-color: #009EFF; max-width: none;">
+		<div id="slider">
+			<div style="position: relative">
+				<img src="images/beacon.png"
+					style="position: relative; top: 5px; left: 44%; transform: scale(0.9, 0.9);" />
+				<img src="images/logo_big.png"
+					style="position: absolute; top: 190px; left: 17%; right: 13%; max-width: 1200px; transform: scale(0.8, 0.8);" />
+			</div>
+		</div>
+	</div>
+	<div class="wrapper row2">
+		<div id="container" class="clear">
+			<!-- content body -->
+			<h:form id="main" prependId="false">
+				<div id="errorMessage" class="login-panel" style="width: 400px;">
+					<p:messages id="growl" autoUpdate="true" />
+				</div>
+
+				<p:panel header="#{msgs.loginHeader}" styleClass="login-panel">
+
+					<h:panelGrid id="grid" columns="2" styleClass="simple-panel">
+
+						<h:outputText value="#{msgs.institute}: *" />
+						<p:column style="width:55%;text-align:left;">
+							<p:selectOneMenu id="institute" value="#{loginBean.institute}"
+								style="font-size:15px;width:220px;">
+								<f:selectItem itemLabel="#{msgs.pleaseSelect}" itemValue="" />
+								<f:selectItems value="#{loginBean.institutes}" />
+								<p:ajax update="loginname password" />
+							</p:selectOneMenu>
+							<p:message for="institute" />
+						</p:column>
+
+						<h:outputText value="#{msgs.loginName}: *" />
+						<p:inputText id="loginname" value="#{loginBean.loginName}"
+							required="true" requiredMessage="#{msgs.loginNameRequired}"
+							disabled="#{not loginBean.instituteSelected}"
+							style="width:220px;" />
+
+						<h:outputText value="#{msgs.password}: *" />
+						<p:password id="password" value="#{loginBean.password}"
+							required="true" requiredMessage="#{msgs.passwordRequired}"
+							disabled="#{not loginBean.instituteSelected}"
+							style="width:220px;" />
+						<h:outputText value="" />
+						<p:commandButton id="loginAction" value="#{msgs.login}"
+							update="growl, password, loginname" action="#{loginBean.login()}"
+							style="width:220px;" />
+					</h:panelGrid>
+				</p:panel>
+			</h:form>
+		</div>
+	</div>
+	<!-- footer -->
+	<ui:include src="WEB-INF/include/footer.xhtml" />
+</h:body>
+</html>

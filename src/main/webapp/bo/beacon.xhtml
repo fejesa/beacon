@@ -1,0 +1,255 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:body>
+	<ui:include src="../WEB-INF/include/header.xhtml" />
+	<div class="wrapper">
+		<div id="slider">
+			<div id="slide-wrapper" class="rounded clear">
+				<figure id="slide-1"> 
+					<p:breadCrumb>
+					    <p:menuitem value="Categories" url="dashboard.xhtml" />
+					    <p:menuitem value="Beacon Management" styleClass="push15" url="beacons.xhtml" />
+					    <p:menuitem value="Beacon" styleClass="push15" url="#" />
+					</p:breadCrumb>				
+				</figure>
+			</div>
+		</div>
+	</div>
+	<div class="wrapper row2">
+		<div id="container" class="clear">
+			<h:form prependId="false">
+				<p:panel>
+					<p:panelGrid id="grid1" styleClass="panel-grid">
+						<p:row>
+							<p:column style="width:5%;text-align:left;font-weight:bold;">
+								<h:outputText value="#{msgs.bcmTitle}:" />
+							</p:column>
+							<p:column style="width:35%;text-align:left;">
+								<p:inputText id="name" value="#{beaconBean.beaconName}"
+									size="36" required="true" disabled="#{beaconBean.user.userType=='Partner'}"/>
+								<p:message for="name" />
+							</p:column>
+							<p:column style="width:5%;text-align:left;font-weight:bold;">
+								<h:outputText value="#{msgs.bcmStatus}:" />
+							</p:column>
+							<p:column style="width:50%;text-align:left;">
+								<h:outputText value="#{beaconBean.status}"
+									converter="beaconStatusConverter" style="font-weight:bold;" />
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+				</p:panel>
+				<p:spacer height="2" />
+				<p:panel>
+					<p:panelGrid id="grid2" styleClass="panel-grid">
+						<p:row>
+							<p:column style="width:5%;text-align:left;font-weight:bold;">
+								<h:outputText value="#{msgs.bcmUuid}:" />
+							</p:column>
+							<p:column style="width:35%;text-align:left;">
+								<p:inputText id="uuid" value="#{beaconBean.uuid}" size="36"
+									required="true" disabled="#{beaconBean.user.userType=='Partner'}"/>
+								<p:message for="uuid" />
+							</p:column>
+							<p:column style="width:10%;text-align:left;font-weight:bold;">
+								<h:outputText value="#{msgs.bcmMajorId}:" />
+							</p:column>
+							<p:column style="width:10%;text-align:left;">
+								<p:inputText id="majorId" value="#{beaconBean.majorId}" size="3"
+									required="true" disabled="#{beaconBean.user.userType=='Partner'}"/>
+								<p:message for="majorId" />
+							</p:column>
+							<p:column style="width:10%;text-align:left;font-weight:bold;">
+								<h:outputText value="#{msgs.bcmMinorId}:" />
+							</p:column>
+							<p:column style="width:35%;text-align:left;">
+								<p:inputText id="minorId" value="#{beaconBean.minorId}" size="3"
+									required="true" disabled="#{beaconBean.user.userType=='Partner'}"/>
+								<p:message for="minorId" />
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+				</p:panel>
+				<p:spacer height="2" />
+				<p:panel>
+					<p:panelGrid id="grid3" styleClass="panel-grid">
+						<p:row>
+							<p:column style="width:5%;text-align:left;font-weight:bold;">
+								<h:outputText value="#{msgs.house}:" />
+							</p:column>
+							<p:column style="width:25%;text-align:left;">
+								<p:inputText id="house" value="#{beaconBean.house}" size="16"
+									required="true" disabled="#{beaconBean.user.userType=='Partner'}"/>
+								<p:message for="house" />
+							</p:column>
+							<p:column style="width:15%;text-align:left;font-weight:bold;">
+								<h:outputText value="#{msgs.locationType}:" />
+							</p:column>
+							<p:column style="width:55%;text-align:left;">
+								<p:selectOneMenu id="locType" value="#{beaconBean.locationType}"
+									required="true" style="font-size:15px;width:220px;" disabled="#{beaconBean.user.userType=='Partner'}">
+									<f:selectItem itemLabel="#{msgs.pleaseSelect}" itemValue="" />
+									<f:selectItems value="#{beaconBean.locationTypes}" />
+									<p:ajax update="partnerInput"/>
+								</p:selectOneMenu>
+								<p:message for="locType" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column style="width:5%;text-align:left;font-weight:bold;">
+								<h:outputText value="#{msgs.street}:" />
+							</p:column>
+							<p:column style="width:25%;text-align:left;">
+								<p:inputText id="street" value="#{beaconBean.street}" size="16"
+									required="true" disabled="#{beaconBean.user.userType=='Partner'}"/>
+								<p:message for="street" />
+							</p:column>
+							<p:column style="width:15%;text-align:left;font-weight:bold;">
+								<h:outputText value="#{msgs.location}:" />
+							</p:column>
+							<p:column style="width:55%;text-align:left;">
+								<p:selectOneMenu id="location" value="#{beaconBean.location}" disabled="#{beaconBean.user.userType=='Partner'}"
+									required="true" style="font-size:15px;width:220px;">
+									<f:selectItem itemLabel="#{msgs.pleaseSelect}" itemValue="" />
+									<f:selectItems value="#{beaconBean.locations}" />
+								</p:selectOneMenu>
+								<p:message for="location" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column style="width:5%;text-align:left;font-weight:bold;">
+								<h:outputText value="#{msgs.zipCode}:" />
+							</p:column>
+							<p:column style="width:35%;text-align:left;">
+								<p:inputText value="#{beaconBean.zipCode}" size="16" disabled="#{beaconBean.user.userType=='Partner'}"/>
+							</p:column>
+							<p:column style="width:5%;text-align:left;font-weight:bold;">
+								<h:outputText value="#{msgs.branchName}:" />
+							</p:column>
+							<p:column style="width:35%;text-align:left;">
+								<p:inputText id="branchName" value="#{beaconBean.branchName}"
+									size="32" disabled="#{beaconBean.user.userType=='Partner'}"/>
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column style="width:5%;text-align:left;font-weight:bold;">
+								<h:outputText value="#{msgs.city}:" />
+							</p:column>
+							<p:column style="width:35%;text-align:left;">
+								<p:inputText id="city" value="#{beaconBean.city}" size="16"
+									required="true" disabled="#{beaconBean.user.userType=='Partner'}"/>
+								<p:message for="city" />
+							</p:column>
+							<p:column style="width:5%;text-align:left;font-weight:bold;">
+								<h:outputText value="#{msgs.gpsLatitude}:" />
+							</p:column>
+							<p:column style="width:35%;text-align:left;">
+								<p:inputText id="gpsLatitude" value="#{beaconBean.gpsLatitude}"
+									size="32" disabled="#{beaconBean.user.userType=='Partner'}"/>
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column style="width:5%;text-align:left;font-weight:bold;">
+								<h:outputText value="#{msgs.country}:" />
+							</p:column>
+							<p:column style="width:35%;text-align:left;">
+								<p:inputText id="country" value="#{beaconBean.country}"
+									size="16" disabled="#{beaconBean.user.userType=='Partner'}"/>
+							</p:column>
+							<p:column style="width:5%;text-align:left;font-weight:bold;">
+								<h:outputText value="#{msgs.gpsLongitude}:" />
+							</p:column>
+							<p:column style="width:35%;text-align:left;">
+								<p:inputText id="gpsLongitude" disabled="#{beaconBean.user.userType=='Partner'}"
+									value="#{beaconBean.gpsLongitude}" size="32" />
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+				</p:panel>
+				<p:spacer height="2" />
+				<p:panel>
+					<p:panelGrid id="grid4" styleClass="panel-grid">
+						<p:row>
+							<p:column style="width:5%;text-align:left;font-weight:bold;">
+								<h:outputText value="#{msgs.activationDate}:" />
+							</p:column>
+							<p:column style="width:35%;text-align:left;">
+								<p:calendar id="activationDate" locale="de" required="true"
+									showButtonPanel="true" value="#{beaconBean.activationDate}"
+									navigator="true" pattern="dd.MM.yyyy" size="12"
+									disabled="#{beaconBean.user.userType=='Partner'}">
+								</p:calendar>
+								<p:message for="activationDate" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column style="width:5%;text-align:left;font-weight:bold;">
+								<h:outputText value="#{msgs.placementDate}:" />
+							</p:column>
+							<p:column style="width:35%;text-align:left;">
+								<p:calendar id="placementDate" locale="de" required="true"
+									showButtonPanel="true" value="#{beaconBean.placementDate}"
+									navigator="true" pattern="dd.MM.yyyy" size="12"
+									disabled="#{beaconBean.user.userType=='Partner'}">
+								</p:calendar>
+								<p:message for="placementDate" />
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+				</p:panel>
+				<p:spacer height="2" />
+				<p:panel>
+					<p:panelGrid id="grid5" styleClass="panel-grid">
+						<p:row>
+							<p:column style="width:10%;text-align:left;font-weight:bold;">
+								<h:outputText value="#{msgs.partnerInput}:" />
+							</p:column>
+							<p:column style="width:35%;text-align:left;">
+								<p:selectOneListbox id="partnerInput" value="#{beaconBean.partnerInput}" 
+									disabled="#{beaconBean.user.userType=='Partner' || beaconBean.locationType!='Partner'}">
+						            <f:selectItem itemLabel="Partner A" itemValue="Partner A" />
+						            <f:selectItem itemLabel="Partner B" itemValue="Partner B" itemDisabled="true"/>
+						            <f:selectItem itemLabel="Partner C" itemValue="Partner C" itemDisabled="true"/>
+						        </p:selectOneListbox>
+								<p:message for="partnerInput" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column style="width:10%;text-align:left;font-weight:bold;">
+								<h:outputText value="#{msgs.freeText}:" />
+							</p:column>
+							<p:column style="width:50%;text-align:left;">
+								<p:inputTextarea value="#{beaconBean.freeText1}" rows="2"
+									cols="40" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column style="width:10%;text-align:left;font-weight:bold;">
+								<h:outputText value="#{msgs.freeText}:" />
+							</p:column>
+							<p:column style="width:50%;text-align:left;">
+								<p:inputTextarea value="#{beaconBean.freeText2}" rows="2"
+									cols="40" />
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+				</p:panel>
+				<p:commandButton id="saveButton" value="#{msgs.save}"
+					actionListener="#{beaconBean.update}" style="width:120px;"
+					ajax="false" />
+				<p:spacer width="50" />
+				<p:commandButton id="cancelButton" value="#{msgs.cancel}"
+					immediate="true" actionListener="#{beaconBean.cancel}"
+					style="width:120px;" ajax="false" />
+			</h:form>
+		</div>
+	</div>
+	<ui:include src="../WEB-INF/include/footer.xhtml" />
+</h:body>
+</html>

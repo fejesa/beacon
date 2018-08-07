@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:body>
+	<ui:include src="../WEB-INF/include/header.xhtml" />
+	<div class="wrapper">
+		<div id="slider">
+			<div id="slide-wrapper" class="rounded clear">
+				<figure id="slide-1">
+					<p:breadCrumb>
+					    <p:menuitem value="Categories" url="dashboard.xhtml" />
+					    <p:menuitem value="User Management" styleClass="push15" url="#" />
+					</p:breadCrumb>
+				</figure>
+			</div>
+		</div>
+	</div>
+	<div class="wrapper row2">
+		<div id="container" class="clear">
+			<h:form id="main" prependId="false"
+				onkeypress="if (event.keyCode == 13) {return false; }">
+
+				<p:dataTable id="userTable" var="user" value="#{userBean.users}">
+					<p:column headerText="#{msgs.userName}" sortBy="#{user.userName}"
+						style="width:100px;" filterBy="#{user.userName}"
+						filterMatchMode="startsWith">
+						<h:outputText value="#{user.userName}" />
+					</p:column>
+					<p:column headerText="#{msgs.firstName}" sortBy="#{user.firstName}"
+						style="width:100px;" styleClass="center-column">
+						<h:outputText value="#{user.firstName}" />
+					</p:column>
+					<p:column headerText="#{msgs.lastName}" sortBy="#{user.lastName}"
+						style="width:100px;" styleClass="center-column">
+						<h:outputText value="#{user.lastName}" />
+					</p:column>
+					<p:column headerText="#{msgs.role}" style="width:100px;"
+						styleClass="center-column">
+						<h:outputText value="#{user.userType}"
+							converter="userTypeConverter" />
+					</p:column>
+					<p:column style="text-align:center;width:150px;">
+						<f:facet name="header">
+							<h:outputText value="#{msgs.actions}"
+								title="#{msgs.actionsTooltip}" />
+						</f:facet>
+						<p:commandLink onclick="PF('userDialog').show();"
+							update="userPanel">
+							<p:graphicImage id="edit" title="#{msgs.edit}"
+								value="/images/edit.png" />
+							<f:setPropertyActionListener target="#{userBean.selectedUserId}"
+								value="#{user.id}" />
+						</p:commandLink>
+						<p:spacer width="10" />
+						<p:commandLink disabled="#{user.active == false}">
+							<p:graphicImage id="deactivate" title="#{msgs.deactivate}"
+								value="/images/deactivate.png" />
+						</p:commandLink>
+						<p:spacer width="10" />
+						<p:commandLink disabled="#{user.active == true}">
+							<p:graphicImage id="activate" title="#{msgs.activate}"
+								value="/images/activate.png" />
+						</p:commandLink>
+						<p:spacer width="10" />
+						<p:commandLink>
+							<p:graphicImage id="remove" title="#{msgs.remove}"
+								value="/images/remove.png" />
+						</p:commandLink>
+					</p:column>
+				</p:dataTable>
+				<p:commandButton value="#{msgs.addUser}" id="add" />
+				
+				<p:commandButton value="#{msgs.customerCampaignGoBack}" id="back"
+					action="dashboard.xhtml" ajax="false" />
+				
+				<p:dialog id="uDialog" widgetVar="userDialog" resizable="false">
+					<p:panelGrid id="userPanel" columns="2" styleClass="dialog-panel">
+						<h:outputText value="#{msgs.userName}" styleClass="bold-field" />
+						<h:outputText value="#{userBean.user.userName}" />
+
+						<h:outputText value="#{msgs.firstName}" styleClass="bold-field" />
+						<h:outputText value="#{userBean.user.firstName}" />
+
+						<h:outputText value="#{msgs.lastName}" styleClass="bold-field" />
+						<h:outputText value="#{userBean.user.lastName}" />
+
+						<h:outputText value="#{msgs.email}" styleClass="bold-field" />
+						<h:outputText value="#{userBean.user.email}" />
+
+						<h:outputText value="#{msgs.role}" styleClass="bold-field" />
+						<h:outputText value="#{userBean.user.userType}"
+							converter="userTypeConverter" />
+
+						<h:outputText value="#{msgs.lastLogin}" styleClass="bold-field" />
+						<h:outputText value="#{userBean.user.lastLogin}">
+							<f:convertDateTime dateStyle="long" locale="de" type="date" />
+						</h:outputText>
+						
+						<p:commandButton id="okButton" value="#{msgs.ok}"
+							onclick="userDialog.hide();" icon="ui-icon-check" />
+					</p:panelGrid>
+
+				</p:dialog>
+			</h:form>
+			<hr class="btmspace-80" />
+			<section> </section>
+			<div class="clear"></div>
+		</div>
+	</div>
+	<ui:include src="../WEB-INF/include/footer.xhtml" />
+</h:body>
+</html>

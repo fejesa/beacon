@@ -1,0 +1,11 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p:menuitem value="#{msgs.campaignWhen}" action="#{campaignBean.autosave('when')}" ajax="false" process=":campaign_form" update=":campaign_form"/>
+	<p:menuitem value="#{msgs.campaignWho}" action="#{campaignBean.autosave('who')}" ajax="false" process=":campaign_form" update=":campaign_form"/>
+	<p:menuitem value="#{msgs.campaignWhere}" action="#{campaignBean.autosave('where')}" ajax="false" process=":campaign_form" update=":campaign_form"/>
+	<p:menuitem value="#{msgs.campaignWhat}" action="#{campaignBean.autosave('what')}" ajax="false" process=":campaign_form" update=":campaign_form"/>
+</ui:composition>

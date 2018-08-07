@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:body>
+	<ui:include src="../WEB-INF/include/header.xhtml" />
+	<div class="wrapper" >
+		<div id="slider">
+			<div id="slide-wrapper" class="rounded clear" style="background-color:#EBEDF3">
+				<figure id="slide-1">  </figure>
+			</div>
+		</div>
+	</div>
+	<div class="wrapper row3">
+		<main id="container" class="clear">
+		<div class="clear center btmspace-80">
+			<div class="one_third first">
+				<p:link outcome="beacons"
+					disabled="#{not dashboardBean.isPermitted('beacon')}"
+					style="opacity: #{dashboardBean.getOpacity('beacon')};">
+					<p:graphicImage id="bcmimage"
+						value="../images/dashboard_beacon_128.png" />
+				</p:link>
+				<h2 class="nospace push15">Beacon Management</h2>
+				<p>The Beacon Management module is where the users can view,
+					create, modify, activate / de-active beacons by defining their
+					characteristics like title, GPS location, address, etc.</p>
+			</div>
+			<div class="one_third">
+				<p:link outcome="customers"
+					disabled="#{not dashboardBean.isPermitted('campaign')}"
+					style="opacity: #{dashboardBean.getOpacity('campaign')};">
+					<p:graphicImage id="campaignimage"
+						value="../images/dashboard_campaign_128.png" />
+				</p:link>
+				<h2 class="nospace push15">Campaign Management</h2>
+				<p>Create or change Champaign within this module.</p>
+			</div>
+			<div class="one_third">
+				<p:link outcome="report_beacons"
+					disabled="#{not dashboardBean.isPermitted('report')}"
+					style="opacity: #{dashboardBean.getOpacity('report')};">
+					<p:graphicImage id="reportimage"
+						value="../images/dashboard_report_128.png" />
+				</p:link>
+				<h2 class="nospace push15">Reporting</h2>
+				<p>The reporting module enables the users to review and analyze
+					business data gathered.</p>
+			</div>
+		</div>
+		<div class="clear center btmspace-80">
+			<div class="one_third first">
+				<p:link outcome="users"
+					disabled="#{not dashboardBean.isPermitted('users')}"
+					style="opacity: #{dashboardBean.getOpacity('users')};">
+					<p:graphicImage id="userimage"
+						value="../images/dashboard_users_128.png" />
+				</p:link>
+				<h2 class="nospace push15">User Administration</h2>
+				<p>The User Administration is a click dummy module to
+					demonstrate user management features but without actual
+					functionality.</p>
+			</div>
+			<div class="one_third">
+				<p:link outcome="import"
+					disabled="#{not dashboardBean.isPermitted('customers')}"
+					style="opacity: #{dashboardBean.getOpacity('customers')};">
+					<p:graphicImage id="customerimage"
+						value="../images/dashboard_customer_128.png" />
+				</p:link>
+				<h2 class="nospace push15">Customer And Accountant Management</h2>
+				<p>Using this module you can import customers and bank
+					accountants data.</p>
+			</div>
+		</div>
+		<hr class="btmspace-80" />
+		<section> </section>
+		<div class="clear"></div>
+		</main>
+	</div>
+	<ui:include src="../WEB-INF/include/footer.xhtml" />
+</h:body>
+</html>
